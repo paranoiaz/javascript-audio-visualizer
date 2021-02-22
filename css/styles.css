@@ -1,0 +1,21 @@
+body {
+  background-color: #23241e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#inputFileWrapper {
+  top: 10%;
+  left: 10%;
+  position: absolute;
+  color: white;
+}
+
+#statusText {
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  top: 0;
+  left: 10%;
+  position: absolute;
+}
