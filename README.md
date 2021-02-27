@@ -1,5 +1,5 @@
 # JavaScript Audio Visualizer
-A simple and smooth audio visualizer usable on the web. Made entirely using JavaScript so it may be slow to run on certain browsers. Make sure to install the dependencies yourself and not use the ones included in the repository, these are only here for showcase purposes.
+A simple and smooth audio visualizer usable on the web. Made entirely using JavaScript so certain browsers could have issues running it. Make sure to install the dependencies yourself and not use the ones included in the repository, these are only there for showcase purposes and may be outdated.
 
 **Dependencies**
 ```
