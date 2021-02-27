@@ -1,18 +1,18 @@
-var songAudio;
-var inputGetAudio;
-var audioFFT;
-var audioAMP;
-var outerCircleRadius;
-var innerCircleRadius;
+var songAudio, inputGetAudio;
+var audioFFT, audioAMP;
+var outerCircleRadius, innerCircleRadius;
 var statusText = "JavaScript audio visualizer developed by github.com/paranoiaz";
 
 function setup() {
     createCanvas(700, 700);
     angleMode(DEGREES);
+
     audioFFT = new p5.FFT(0.6, 256);
     audioAMP = new p5.Amplitude(0.6);
+
     outerCircleRadius = 300;
-    innerCircleRadius = outerCircleRadius/2;
+    innerCircleRadius = outerCircleRadius - 50;
+
     inputGetAudio = document.getElementById("song");
     inputGetAudio.addEventListener("input", loadAudio);
 }
@@ -38,8 +38,8 @@ function draw() {
         let fftValue = spectrum[i];
         let ampValue = audioAMP.getLevel();
         let angle = map(i, 0, spectrum.length, 0, 360);
-
         let radius = map(fftValue, 0, 256, outerCircleRadius/2, outerCircleRadius);
+
         let startingX = outerCircleRadius/2 * cos(angle);
         let startingY = outerCircleRadius/2 * sin(angle);
         let endingX = radius * cos(angle);
@@ -56,19 +56,20 @@ async function loadAudio() {
     inputGetAudio.style.visibility = "hidden";
     songAudio = loadSound(inputGetAudio.files[0]);
     document.getElementById("statusText").innerText = statusText + "\nWaiting on audio to get loaded."
-    for (var x = 0; x < 5; x++) {
-        // takes a moment for the soundfile object to load
-        await asyncSleep(1);
+    
+    for (var timerSeconds = 0; timerSeconds < 5; timerSeconds++) {
+        // takes a few seconds for the soundfile object to be ready
+        await sleep(1);
         if (songAudio.isLoaded()) {
             songAudio.play();
             document.getElementById("statusText").innerText = statusText + `\nStarted playing ${inputGetAudio.files[0].name}`;
             return;
         }
     }
+
     console.log("Invalid file type or took too long to load.")
     document.getElementById("statusText").innerText = statusText + "\nInvalid file type or took too long to load."
 }
 
-function asyncSleep(seconds) {
-    return new Promise(resolve => setTimeout(resolve, seconds * 1000));
-  }
+// sleep function used to wait for loading of audio
+sleep = (seconds) => new Promise(resolve => setTimeout(resolve, seconds * 1000));
